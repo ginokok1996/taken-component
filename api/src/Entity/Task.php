@@ -87,7 +87,7 @@ class Task
     /**
      * @var string The status of this task.
      *
-     * @example started, finished
+     * @example started
      * @Assert\Length(
      *      max = 255
      * )
@@ -105,6 +105,44 @@ class Task
      * @ORM\Column(type="integer")
      */
     private $priority = 9;
+
+    /**
+     * @var int The percentage of a to-do that has been comepleted.
+     * @example 40%
+     *
+     * @Assert\Type("int")
+     * @Groups({"read","write"})
+     * @ORM\Column(type="integer")
+     */
+    private $percentageDone = 0;
+
+    /**
+     * @var DateTime The date and time a to-do is completed.
+     * @example 10-12-2019 15:00:00
+     *
+     * @Assert\DateTime
+     * @Groups({"read","write"})
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $completed;
+
+    /**
+     * @var Datetime $dateCreated The moment this resource was created
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateCreated;
+
+    /**
+     * @var Datetime $dateModified  The moment this resource last Modified
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateModified;
 
     public function getId(): ?int
     {
@@ -167,6 +205,54 @@ class Task
     public function setPriority(int $priority): self
     {
         $this->priority = $priority;
+
+        return $this;
+    }
+
+    public function getPercentageDone(): ?int
+    {
+        return $this->percentageDone;
+    }
+
+    public function setPercentageDone(int $percentageDone): self
+    {
+        $this->percentageDone = $percentageDone;
+
+        return $this;
+    }
+
+    public function getCompleted(): ?\DateTimeInterface
+    {
+        return $this->completed;
+    }
+
+    public function setCompleted(\DateTimeInterface $completed): self
+    {
+        $this->completed = $completed;
+
+        return $this;
+    }
+
+    public function getDateCreated(): ?\DateTimeInterface
+    {
+        return $this->dateCreated;
+    }
+
+    public function setDateCreated(\DateTimeInterface $dateCreated): self
+    {
+        $this->dateCreated= $dateCreated;
+
+        return $this;
+    }
+
+    public function getDateModified(): ?\DateTimeInterface
+    {
+        return $this->dateModified;
+    }
+
+    public function setDateModified(\DateTimeInterface $dateModified): self
+    {
+        $this->dateModified = $dateModified;
 
         return $this;
     }
